@@ -1,17 +1,17 @@
-package db
+package exchangestore
 
 import (
 	"context"
 	"github.com/redis/go-redis/v9"
 )
 
-type dbclient struct {
+type ExchangeStore struct {
 	Redis *redis.Client
 }
 
 var ctx = context.Background()
 
-func NewClient() (*dbclient, error) {
+func New() (*ExchangeStore, error) {
 	rdbClient := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
 		Password: "",
@@ -24,13 +24,13 @@ func NewClient() (*dbclient, error) {
 		return nil, err
 	}
 
-	return &dbclient{
+	return &ExchangeStore{
 		Redis: rdbClient,
 	}, nil
 }
 
-// GetKey is wrapper function for Get Redis Command
-func (db *dbclient) GetKey(key string) (string, error) {
+// GetExchange retrieves a Currency Exchange from Store layer
+func (db *ExchangeStore) GetExchange(key string) (string, error) {
 	val, err := db.Redis.Get(ctx, key).Result()
 	return val, err
 }
