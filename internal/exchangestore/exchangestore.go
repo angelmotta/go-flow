@@ -6,7 +6,7 @@ import (
 )
 
 type ExchangeStore struct {
-	Redis *redis.Client
+	redis *redis.Client
 }
 
 var ctx = context.Background()
@@ -25,12 +25,12 @@ func New() (*ExchangeStore, error) {
 	}
 
 	return &ExchangeStore{
-		Redis: rdbClient,
+		redis: rdbClient,
 	}, nil
 }
 
 // GetExchange retrieves a Currency Exchange from Store layer
 func (db *ExchangeStore) GetExchange(key string) (string, error) {
-	val, err := db.Redis.Get(ctx, key).Result()
+	val, err := db.redis.Get(ctx, key).Result()
 	return val, err
 }
