@@ -29,7 +29,7 @@ func New() (*ExchangeStore, error) {
 	}, nil
 }
 
-// GetExchange retrieves a Currency Exchange from Store layer
+// GetExchange retrieves a Currency Exchange from the Store layer
 func (db *ExchangeStore) GetExchange(key string) (string, error) {
 	val, err := db.redis.Get(ctx, key).Result()
 	return val, err
